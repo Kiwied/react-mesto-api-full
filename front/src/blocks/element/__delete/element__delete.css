@@ -1,0 +1,21 @@
+@import url(_hidden/element__delete_hidden.css);
+
+.element__delete {
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  width: 18px;
+  height: 19.3px;
+  cursor: pointer;
+  background-image: url(../../../images/delete-button.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none;
+  -webkit-transition: opacity .15s linear;
+  transition: opacity .15s linear;
+}
+
+.element__delete:hover {
+  opacity: .7;
+}

@@ -1,0 +1,33 @@
+@import url(__title/form__title.css);
+@import url(__input/form__input.css);
+@import url(__input-error/form__input-error.css);
+@import url(__input-error/_active/form__input-error_active.css);
+@import url(__save/form__save.css);
+@import url(__save/_inactive/form__save_inactive.css);
+@import url(__close/form__close.css);
+@import url(__input/_type/form__input_type_error.css);
+
+.form {
+  width: 430px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+          flex-direction: column;
+  -webkit-box-align: center;
+          align-items: center;
+  background-color: white;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  margin: -165px 0 0 -215px;
+  border-radius: 10px;
+}
+
+@media screen and (max-width: 537px) {
+  .form {
+    width: 80%;
+    margin: -165px 0 0 -40%;
+  }
+}
+

@@ -1,0 +1,15 @@
+@import url(./__caption/infoTooltip__caption.css);
+@import url(./__icon/infoTooltip__icon.css);
+
+.infoTooltip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 430px;
+  margin: -165px 0 0 -215px;
+  border-radius: 10px;
+  background-color: white;
+}

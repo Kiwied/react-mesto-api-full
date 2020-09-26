@@ -1,0 +1,18 @@
+.popup_opened {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity .15s linear;
+}
+
+.popup_opened::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.popup_opened:hover::before {
+  cursor: pointer;
+}

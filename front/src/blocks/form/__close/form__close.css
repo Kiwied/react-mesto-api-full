@@ -1,0 +1,36 @@
+.form__close {
+  position: absolute;
+  right: -8%;
+  top: -11%;
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  background-image: url(../../../images/button-add.svg);
+  background-size: cover;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 0;
+  cursor: pointer;
+  -webkit-transition: opacity .15s linear;
+  transition: opacity .15s linear;
+}
+
+.form__close:hover {
+  opacity: .6;
+}
+
+.form__close:focus {
+  outline: none;
+}
+
+.form__close:active {
+  opacity: 1;
+  transition: 0s;
+}
+
+.popup_opened .form:not(:hover) .form__close {
+  opacity: .6;
+}

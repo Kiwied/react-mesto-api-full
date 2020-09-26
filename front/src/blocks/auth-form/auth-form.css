@@ -1,0 +1,10 @@
+@import url(__input/auth-form__input.css);
+@import url(__submit/auth-form__submit.css);
+@import url(__title/auth-form__title.css);
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  width: 358px;
+  align-items: center;
+}

@@ -1,0 +1,44 @@
+.popup__close {
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border: none;
+  background-image: url(../../../images/button-add.svg);
+  background-size: cover;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 0;
+  cursor: pointer;
+  -webkit-transition: opacity .15s linear;
+  transition: opacity .15s linear;
+}
+
+.popup__close:hover {
+  opacity: .6;
+}
+
+.popup__close:focus {
+  outline: none;
+}
+
+.popup__close:active {
+  opacity: 1;
+  transition: 0s;
+}
+
+.popup_opened .popup__enlarged:not(:hover) .popup__close {
+  opacity: .6;
+}
+
+.popup_opened .form:not(:hover) .popup__close {
+  opacity: .6;
+}
+
+.popup__opened .infoTooltip:not(:hover) .popup__close {
+  opacity: .6;
+}
