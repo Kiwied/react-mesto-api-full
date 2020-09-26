@@ -1,8 +1,0 @@
-@import url(__redirect/auth__redirect.css);
-
-.auth {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 60px;
-}
