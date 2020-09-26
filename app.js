@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
+const { celebrate, Joi, errors } = require('celebrate');
 
 const users = require('./routes/users');
 const cards = require('./routes/cards');
@@ -26,14 +27,34 @@ const limiter = rateLimit({
 app.use(limiter);
 app.use(bodyParser.json());
 
-app.post('/signin', login);
-app.post('/signup', createUser);
+app.use((req, res, next) => {
+  req.user = {
+    _id: '5d8b8592978f8bd833ca8133',
+  };
+
+  next();
+});
+
+app.post('/signin', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required(),
+    password: Joi.string().required().min(8),
+  }),
+}), login);
+app.post('/signup', celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().required(),
+    password: Joi.string().required().min(8),
+  }).unknown(true),
+}), createUser);
 
 //app.use(auth);
 
 app.use('/users', users);
 app.use('/cards', cards);
 app.use('*', notFound);
+
+app.use(errors());
 
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {

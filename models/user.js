@@ -7,19 +7,19 @@ const UnauthorizedError = require('../errors/UnauthorizedError');
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    default: 'Жак-Ив Кусто',
     minlength: 2,
     maxlength: 30,
   },
   about: {
     type: String,
-    required: true,
+    default: 'Исследователь океана',
     minlength: 2,
     maxlength: 30,
   },
   avatar: {
     type: String,
-    required: true,
+    default: 'https://sun9-49.userapi.com/Z5q0c8KzPdexlZj1giWLVqRL1hkPqzRSwiNm9Q/1dk9u0HzsIM.jpg',
     validate: {
       validator(v) {
         return /^(http:\/\/|https:\/\/)(www\.)?([a-z0-9]+-?[/.]?)+#?$/i.test(v);
@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: 6,
+    minlength: 8,
     select: false,
   },
 }, { versionKey: false });
