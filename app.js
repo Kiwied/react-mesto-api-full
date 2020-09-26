@@ -9,6 +9,7 @@ const cards = require('./routes/cards');
 const notFound = require('./routes/notFound');
 const auth = require('./middlewares/auth');
 const { login, createUser } = require('./controllers/users');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -27,13 +28,7 @@ const limiter = rateLimit({
 app.use(limiter);
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '5d8b8592978f8bd833ca8133',
-  };
-
-  next();
-});
+app.use(requestLogger);
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -48,11 +43,13 @@ app.post('/signup', celebrate({
   }).unknown(true),
 }), createUser);
 
-//app.use(auth);
+app.use(auth);
 
 app.use('/users', users);
 app.use('/cards', cards);
 app.use('*', notFound);
+
+app.use(errorLogger);
 
 app.use(errors());
 
