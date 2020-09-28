@@ -39,7 +39,7 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signin', celebrate({
+app.post('/api/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required(),
     password: Joi.string().required().min(8),
@@ -52,10 +52,10 @@ app.post('/api/signup', celebrate({
   }).unknown(true),
 }), createUser);
 
-//app.use(auth);
+app.use(auth);
 
-app.use('/users', users);
-app.use('/cards', cards);
+app.use('/api/users', users);
+app.use('/api/cards', cards);
 app.use('*', notFound);
 
 app.use(errorLogger);
