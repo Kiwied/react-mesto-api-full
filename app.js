@@ -52,7 +52,7 @@ app.post('/signup', celebrate({
   }).unknown(true),
 }), createUser);
 
-app.use(auth);
+//app.use(auth);
 
 app.use('/users', users);
 app.use('/cards', cards);
@@ -72,7 +72,6 @@ app.use((err, req, res, next) => {
       message: statusCode === 500
         ? 'На сервере произошла ошибка'
         : message,
-      error: err,
     });
 });
 
