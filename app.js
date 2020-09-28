@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
 const { celebrate, Joi, errors } = require('celebrate');
+const cors = require('cors');
 
 const users = require('./routes/users');
 const cards = require('./routes/cards');
@@ -30,13 +31,7 @@ app.use(bodyParser.json());
 
 app.use(requestLogger);
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,PATCH,POST,DELETE');
-
-  next();
-});
+app.use(cors());
 
 app.get('/crash-test', () => {
   setTimeout(() => {
