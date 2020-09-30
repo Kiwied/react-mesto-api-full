@@ -55,7 +55,8 @@ function createUser(req, res, next) {
 }
 
 function getAuthorizedUser(req, res, next) {
-  const token = req.headers.authorization.replace('Bearer ', '');
+  const { authorization } = req.headers;
+  const token = authorization.replace('Bearer ', '');
   jwt.verify(token, 'some-secret-key')
     .then((payload) => res.send({ _id: payload._id, email: payload.email }))
     .catch(() => {
