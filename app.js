@@ -9,7 +9,7 @@ const users = require('./routes/users');
 const cards = require('./routes/cards');
 const notFound = require('./routes/notFound');
 const auth = require('./middlewares/auth');
-const { login, createUser } = require('./controllers/users');
+const { login, createUser, getAuthorizedUser } = require('./controllers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
@@ -33,11 +33,13 @@ app.use(requestLogger);
 
 app.use(cors());
 
-app.get('/crash-test', () => {
+app.get('/api/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+
+app.get('/api/users/me', getAuthorizedUser);
 
 app.post('/api/signin', celebrate({
   body: Joi.object().keys({

@@ -4,6 +4,7 @@ const User = require('../models/user');
 
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
+const AnauthorizedError = require('../errors/UnauthorizedError');
 
 function getUsers(req, res, next) {
   User.find({})
@@ -53,6 +54,16 @@ function createUser(req, res, next) {
     .catch(next);
 }
 
+function getAuthorizedUser(req, res, next) {
+  const token = req.headers.authorization.replace('Bearer ', '');
+  jwt.verify(token, 'some-secret-key')
+    .then((payload) => res.send({ _id: payload._id, email: payload.email }))
+    .catch(() => {
+      throw new AnauthorizedError('Необходима авторизация');
+    })
+    .catch(next);
+}
+
 function updateProfileInfo(req, res, next) {
   const ownerId = req.user._id;
   const { name, about } = req.body;
@@ -85,12 +96,12 @@ function login(req, res, next) {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       res.send({
-        token: jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' }),
+        token: jwt.sign({ _id: user._id, email: user.email }, 'some-secret-key', { expiresIn: '7d' }),
       });
     })
     .catch(next);
 }
 
 module.exports = {
-  getUsers, getUserById, createUser, updateProfileInfo, updateProfileAvatar, login,
+  getUsers, getUserById, createUser, updateProfileInfo, updateProfileAvatar, login, getAuthorizedUser,
 };
