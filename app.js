@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
 const { celebrate, Joi, errors } = require('celebrate');
+const cors = require('cors');
 
 const users = require('./routes/users');
 const cards = require('./routes/cards');
@@ -30,6 +31,7 @@ app.use(bodyParser.json());
 
 app.use(requestLogger);
 
+app.use(cors());
 
 app.get('/crash-test', () => {
   setTimeout(() => {
