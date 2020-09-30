@@ -39,8 +39,6 @@ app.get('/api/crash-test', () => {
   }, 0);
 });
 
-//app.get('/api/users/me', getAuthorizedUser);
-
 app.post('/api/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required(),
