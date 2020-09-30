@@ -54,15 +54,19 @@ function createUser(req, res, next) {
     .catch(next);
 }
 
-function getAuthorizedUser(req, res, next) {
+// eslint-disable-next-line consistent-return
+function getAuthorizedUser(req, res) {
   const { authorization } = req.headers;
   const token = authorization.replace('Bearer ', '');
-  jwt.verify(token, 'some-secret-key')
-    .then((payload) => res.send({ _id: payload._id, email: payload.email }))
-    .catch(() => {
-      throw new AnauthorizedError('Необходима авторизация');
-    })
-    .catch(next);
+
+  let payload;
+
+  try {
+    payload = jwt.verify(token, 'some-secret-key');
+    res.send({ _id: payload._id, email: payload.email });
+  } catch (err) {
+    return res.status(401).send({ message: 'Необходима авторизация' });
+  }
 }
 
 function updateProfileInfo(req, res, next) {
@@ -104,5 +108,11 @@ function login(req, res, next) {
 }
 
 module.exports = {
-  getUsers, getUserById, createUser, updateProfileInfo, updateProfileAvatar, login, getAuthorizedUser,
+  getUsers,
+  getUserById,
+  createUser,
+  updateProfileInfo,
+  updateProfileAvatar,
+  login,
+  getAuthorizedUser,
 };
