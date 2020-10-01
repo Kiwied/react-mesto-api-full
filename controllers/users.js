@@ -5,6 +5,7 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
 const AnauthorizedError = require('../errors/UnauthorizedError');
+const ConflictError = require('../errors/ConflictError');
 
 function getUsers(req, res, next) {
   User.find({})
@@ -48,7 +49,7 @@ function createUser(req, res, next) {
             }))
             .catch((err) => {
               if (err.name === 'MongoError') {
-                throw new BadRequestError('Пользователь с таким email уже зарегистрирован');
+                throw new ConflictError('Пользователь с таким email уже зарегистрирован');
               } else if (err.name === 'ValidationError') {
                 throw new BadRequestError('Введены некорректные данные');
               }
