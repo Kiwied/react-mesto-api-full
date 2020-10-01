@@ -7,11 +7,7 @@ const {
 
 router.get('/', getUsers);
 
-router.get('/me', celebrate({
-  headers: Joi.object().keys({
-    Authorization: Joi.string().required(),
-  }),
-}), getAuthorizedUser);
+router.get('/me', getAuthorizedUser);
 
 router.get('/:userId', celebrate({
   params: Joi.object().keys({
