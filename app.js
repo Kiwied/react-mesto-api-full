@@ -9,7 +9,7 @@ const users = require('./routes/users');
 const cards = require('./routes/cards');
 const notFound = require('./routes/notFound');
 const auth = require('./middlewares/auth');
-const { login, createUser, getAuthorizedUser } = require('./controllers/users');
+const { login, createUser } = require('./controllers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
@@ -33,19 +33,19 @@ app.use(requestLogger);
 
 app.use(cors());
 
-app.get('/api/crash-test', () => {
+app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
 
-app.post('/api/signin', celebrate({
+app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required(),
     password: Joi.string().required().min(8),
   }),
 }), login);
-app.post('/api/signup', celebrate({
+app.post('/signup', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required(),
     password: Joi.string().required().min(8),
@@ -54,8 +54,8 @@ app.post('/api/signup', celebrate({
 
 app.use(auth);
 
-app.use('/api/users', users);
-app.use('/api/cards', cards);
+app.use('/users', users);
+app.use('/cards', cards);
 app.use('*', notFound);
 
 app.use(errorLogger);
