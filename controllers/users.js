@@ -56,17 +56,19 @@ function createUser(req, res, next) {
 
 // eslint-disable-next-line consistent-return
 function getAuthorizedUser(req, res) {
-  const { authorization } = req.headers;
-  const token = authorization.replace('Bearer ', '');
+  // const { authorization } = req.headers;
+  // const token = authorization.replace('Bearer ', '');
+//
+  // let payload;
+//
+  // try {
+  //  payload = jwt.verify(token, 'some-secret-key');
+  //  res.send({ _id: payload._id, email: payload.email });
+  // } catch (err) {
+  //  return res.status(401).send({ message: 'Необходима авторизация' });
+  // }
 
-  let payload;
-
-  try {
-    payload = jwt.verify(token, 'some-secret-key');
-    res.send({ _id: payload._id, email: payload.email });
-  } catch (err) {
-    return res.status(401).send({ message: 'Необходима авторизация' });
-  }
+  res.send({ _id: req.user._id, email: req.user.email });
 }
 
 function updateProfileInfo(req, res, next) {
