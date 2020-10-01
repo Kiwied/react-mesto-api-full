@@ -4,8 +4,9 @@ const User = require('../models/user');
 
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
-const AnauthorizedError = require('../errors/UnauthorizedError');
 const ConflictError = require('../errors/ConflictError');
+
+const { JWT_SECRET = 'dev-key' } = process.env;
 
 function getUsers(req, res, next) {
   User.find({})
@@ -63,19 +64,17 @@ function createUser(req, res, next) {
 
 // eslint-disable-next-line consistent-return
 function getAuthorizedUser(req, res) {
-  // const { authorization } = req.headers;
-  // const token = authorization.replace('Bearer ', '');
-//
-  // let payload;
-//
-  // try {
-  //  payload = jwt.verify(token, 'some-secret-key');
-  //  res.send({ _id: payload._id, email: payload.email });
-  // } catch (err) {
-  //  return res.status(401).send({ message: 'Необходима авторизация' });
-  // }
+  const { authorization } = req.headers;
+  const token = authorization.replace('Bearer ', '');
 
-  res.send({ _id: req.user._id, email: req.user.email });
+  let payload;
+
+  try {
+    payload = jwt.verify(token, JWT_SECRET);
+    res.send({ _id: payload._id, email: payload.email });
+  } catch (err) {
+    return res.status(401).send({ message: 'Необходима авторизация' });
+  }
 }
 
 function updateProfileInfo(req, res, next) {
@@ -110,7 +109,7 @@ function login(req, res, next) {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       res.send({
-        token: jwt.sign({ _id: user._id, email: user.email }, 'some-secret-key', { expiresIn: '7d' }),
+        token: jwt.sign({ _id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '7d' }),
       });
     })
     .catch(next);
