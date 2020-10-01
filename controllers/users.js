@@ -39,7 +39,13 @@ function createUser(req, res, next) {
             email,
             password: hash,
           })
-            .then((user) => res.send({ data: user }))
+            .then((user) => res.send({
+              name: user.name,
+              about: user.about,
+              avatar: user.avatar,
+              email: user.email,
+              _id: user._id,
+            }))
             .catch((err) => {
               if (err.name === 'MongoError') {
                 throw new BadRequestError('Пользователь с таким email уже зарегистрирован');

@@ -9,7 +9,7 @@ const users = require('./routes/users');
 const cards = require('./routes/cards');
 const notFound = require('./routes/notFound');
 const auth = require('./middlewares/auth');
-const { login, createUser, getAuthorizedUser } = require('./controllers/users');
+const { login, createUser } = require('./controllers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
