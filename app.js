@@ -31,7 +31,7 @@ app.use(bodyParser.json());
 
 app.use(requestLogger);
 
-app.use(cors());
+app.use(cors({ origin: true }));
 
 app.get('/crash-test', () => {
   setTimeout(() => {
