@@ -63,7 +63,7 @@ function createUser(req, res, next) {
 }
 
 // eslint-disable-next-line consistent-return
-function getAuthorizedUser(req, res) {
+function getAuthorizedUser(req, res, next) {
   const { authorization } = req.headers;
   const token = authorization.replace('Bearer ', '');
 
@@ -71,7 +71,21 @@ function getAuthorizedUser(req, res) {
 
   try {
     payload = jwt.verify(token, JWT_SECRET);
-    res.send({ _id: payload._id, email: payload.email });
+    User.findById(payload._id)
+      .then((user) => {
+        if (user === null) {
+          throw new NotFoundError('Пользователь не найден');
+        } else {
+          res.send({
+            _id: user._id,
+            email: user.email,
+            name: user.name,
+            about: user.about,
+            avatar: user.avatar,
+          });
+        }
+      })
+      .catch(next);
   } catch (err) {
     return res.status(401).send({ message: 'Необходима авторизация' });
   }
