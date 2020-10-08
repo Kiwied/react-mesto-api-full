@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     default: 'https://sun9-49.userapi.com/Z5q0c8KzPdexlZj1giWLVqRL1hkPqzRSwiNm9Q/1dk9u0HzsIM.jpg',
     validate: {
       validator(v) {
-        return /^(http:\/\/|https:\/\/)(www\.)?([a-z0-9_]+-?[/.]?)+\.[a-z]{1,7}([a-z0-9_]+-?[/.]?)+#?$/i.test(v);
+        return validator.isURL(v);
       },
       message: 'Введите валидный url',
     },
