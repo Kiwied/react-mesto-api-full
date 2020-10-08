@@ -26,6 +26,6 @@
 
 ## Ссылки
 
-домен для обращения к API: https://kiwiedmesto.students.nomoreparties.co/api  
+домен для обращения к API: https://www.api.kiwied.students.nomoreparties.xyz/
 репозиторий с React-приложением: https://github.com/Kiwied/mesto-react   
 публичный IP адресс: 130.193.50.115  
