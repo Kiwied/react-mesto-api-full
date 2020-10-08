@@ -38,12 +38,13 @@ function likeCard(req, res, next) {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
+    { new: true },
   )
-    .then((data) => {
-      if (data === null) {
+    .then((card) => {
+      if (card === null) {
         throw new NotFoundError('Карточка не найдена');
       } else {
-        res.send({ message: 'Лайк' });
+        res.send({ data: card });
       }
     })
     .catch((err) => {
@@ -58,12 +59,13 @@ function dislikeCard(req, res, next) {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
+    { new: true },
   )
-    .then((data) => {
-      if (data === null) {
+    .then((card) => {
+      if (card === null) {
         throw new NotFoundError('Карточка не найдена');
       } else {
-        res.send({ message: 'Дизлайк' });
+        res.send({ data: card });
       }
     })
     .catch((err) => {
